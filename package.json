@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "vercel-build": "yum install libuuid-devel libmount-devel wget && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/ && ./setup.sh"
+    "vercel-build": "yum install libuuid-devel libmount-devel zlib.i686 && cp /lib64/{libuuid,libmount,libblkid,libz}.so.1 node_modules/canvas/build/Release/"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/cyberpirate92/quote-image-api#readme",
   "dependencies": {
-    "canvas": "^2.9.0",
+    "canvas": "^2.6.1",
     "jest": "^27.4.7"
   }
 }
