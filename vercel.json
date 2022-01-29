@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "api/imagequote.js": {
+        "includeFiles": "fonts/**"
+      }
+    }
+  }
