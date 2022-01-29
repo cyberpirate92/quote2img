@@ -4,7 +4,8 @@
   "description": "A Web API for generating images of quotes",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "vercel-build": "yum install libuuid-devel libmount-devel zlib && cp /lib64/{libuuid,libmount,libblkid,libz}.so.1 node_modules/canvas/build/Release/"
   },
   "repository": {
     "type": "git",
