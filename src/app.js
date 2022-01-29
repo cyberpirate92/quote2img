@@ -10,7 +10,8 @@ const FONT_SIZE_PX = 50;
 const MAX_TEXT_LENGTH = 300;
 const TEXT_LINE_HEIGHT_PX = 20;
 const FONT_FAMILY = 'JosefinSans';
-const FONT_STYLE = `${FONT_SIZE_PX}px ${FONT_FAMILY}`;
+const QUOTE_FONT_STYLE = `${FONT_SIZE_PX}px ${FONT_FAMILY}`;
+const AUTHOR_FONT_STYLE = `italic ${parseInt(FONT_SIZE_PX * 0.8)}px ${FONT_FAMILY}`;
 
 const TEXT_COLOR = '#333';
 const BORDER_COLOR = '#333';
@@ -23,7 +24,7 @@ const ctx = canvas.getContext('2d');
 
 ctx.fillStyle = BORDER_COLOR;
 ctx.fillRect(0, 0, CANVAS_WIDTH_PX, CANVAS_HEIGHT_PX);
-ctx.font = FONT_STYLE;  // Important that this line should be before the call to `breakIntoLines`
+ctx.font = QUOTE_FONT_STYLE;  // Important that this line should be before the call to `breakIntoLines`
 
 ctx.fillStyle = BACKGROUND_COLOR;
 ctx.fillRect(CANVAS_BORDER_WIDTH_PX, CANVAS_BORDER_WIDTH_PX, CANVAS_WIDTH_PX - (2 *CANVAS_BORDER_WIDTH_PX), CANVAS_HEIGHT_PX - (2 *CANVAS_BORDER_WIDTH_PX));
@@ -33,6 +34,8 @@ let textToDisplay = `When people fall in love with someone's flowers, but not th
 // let textToDisplay = `What the fuck.`;
 textToDisplay = normalizeText(textToDisplay);
 
+let author = "vaishu";
+
 if (MAX_TEXT_LENGTH < textToDisplay) {
     // TODO: Count emojis as single characters
     console.error("Error: Text exceeds 300 character limit");
@@ -40,7 +43,7 @@ if (MAX_TEXT_LENGTH < textToDisplay) {
 }
 
 const lines = breakIntoLines(ctx, textToDisplay, CANVAS_PADDING_PX);
-renderLinesCenteredHorizontallyAndVertically(ctx, lines, CANVAS_PADDING_PX);
+renderQuoteTextAndAuthorName(ctx, lines, author);
 saveCanvasAsPng(canvas, './out/image.png');
 
 /**
@@ -57,6 +60,11 @@ function loadCustomFonts() {
     registerFont('./fonts/JosefinSans-Regular.ttf', {
         family: FONT_FAMILY,
         style: 'regular',
+    });
+
+    registerFont('./fonts/JosefinSans-Italic.ttf', {
+        family: FONT_FAMILY,
+        style: 'italic',
     });
 }
 
@@ -99,14 +107,15 @@ function breakIntoLines(ctx, text, paddingInPx) {
 /**
  * 
  * @param {CanvasRenderingContext2D} ctx 
- * @param {string[]} lines 
- * @param {number} paddingInPx 
+ * @param {string[]} quoteLines 
+ * @param {string} authorName
  */
-function renderLinesCenteredHorizontallyAndVertically(ctx, lines, paddingInPx) {
+function renderQuoteTextAndAuthorName(ctx, quoteLines, authorName) {
     const xCenter  = ctx.canvas.width / 2;
     const yCenter = ctx.canvas.height / 2;
-    const maxLineHeight = getMaxLineHeight(ctx, lines);
-    let oddNumberOfLines = lines.length % 2 !== 0;
+    const maxLineHeight = getMaxLineHeight(ctx, quoteLines);
+    let oddNumberOfLines = quoteLines.length % 2 !== 0;
+    let lastLineY = yCenter;
 
     console.log('Rendering Lines');
     ctx.textAlign = 'center';
@@ -114,12 +123,12 @@ function renderLinesCenteredHorizontallyAndVertically(ctx, lines, paddingInPx) {
     ctx.strokeStyle = TEXT_COLOR;
 
     if (oddNumberOfLines) {
-        const middleLineText = lines[parseInt(lines.length/2)];
+        const middleLineText = quoteLines[parseInt(quoteLines.length/2)];
         ctx.fillText(middleLineText, xCenter, yCenter);
     }
 
-    if (lines.length > 1) {
-        let middleLineIndex = parseInt(lines.length/2);
+    if (quoteLines.length > 1) {
+        let middleLineIndex = parseInt(quoteLines.length/2);
         let prevLineIdx = middleLineIndex - 1;
         let nextLineIdx = oddNumberOfLines ? middleLineIndex + 1 : middleLineIndex;
         
@@ -128,14 +137,27 @@ function renderLinesCenteredHorizontallyAndVertically(ctx, lines, paddingInPx) {
 
         while (prevLineIdx >= 0) {
             const yPos = yCenter - (yOffset * (middleLineIndex - prevLineIdx));
-            ctx.fillText(lines[prevLineIdx], xCenter, yPos);
+            ctx.fillText(quoteLines[prevLineIdx], xCenter, yPos);
             prevLineIdx--;
         }
-        while (nextLineIdx < lines.length) {
+        while (nextLineIdx < quoteLines.length) {
             const yPos = yCenter + (yOffset * (nextLineIdx - middleLineIndex));
-            ctx.fillText(lines[nextLineIdx], xCenter, yPos);
+            ctx.fillText(quoteLines[nextLineIdx], xCenter, yPos);
+            lastLineY = yPos;
             nextLineIdx++;
         }
+    }
+
+    if (!!authorName && authorName.length > 0) {
+        let maxLineWidth = Math.max(...lines.map(x => x.length));
+        if (!authorName.startsWith("-")) {
+            authorName = "- " + authorName;
+        }
+        
+        let paddedAuthorName = padLeftWithSpaces(authorName, maxLineWidth);
+        let yOffset = TEXT_LINE_HEIGHT_PX + maxLineHeight;
+        ctx.font = AUTHOR_FONT_STYLE;
+        ctx.fillText(paddedAuthorName, xCenter, lastLineY + yOffset);
     }
 }
 
@@ -163,4 +185,19 @@ function saveCanvasAsPng(canvas, outputFilePath) {
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(outputFilePath, buffer);
     console.log('Image saved');
+}
+
+/**
+ * @param {string} text 
+ * @param {number} padLength 
+ */
+function padLeftWithSpaces(text, padLength) {
+    if (text.length > padLength) {
+        return text.substring(padLength);
+    }
+
+    while (text.length < padLength) {
+        text = " " + text;
+    }
+    return text;
 }
