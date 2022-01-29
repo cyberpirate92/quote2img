@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/cyberpirate92/quote-image-api#readme",
   "dependencies": {
-    "canvas": "^2.9.0"
+    "canvas": "^2.9.0",
+    "jest": "^27.4.7"
   }
 }
