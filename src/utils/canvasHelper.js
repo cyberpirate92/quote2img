@@ -11,18 +11,22 @@ const MAX_TEXT_LENGTH = 300;
 const TEXT_LINE_HEIGHT_PX = 20;
 const FONT_FAMILY = 'JosefinSans';
 const QUOTE_FONT_STYLE = `${FONT_SIZE_PX}px ${FONT_FAMILY}`;
-const AUTHOR_FONT_STYLE = `italic ${parseInt(FONT_SIZE_PX * 0.8)}px ${FONT_FAMILY}`;
+const AUTHOR_FONT_STYLE = `italic ${parseInt(FONT_SIZE_PX * 0.85)}px ${FONT_FAMILY}`;
 
-const TEXT_COLOR = '#333';
-const BORDER_COLOR = '#333';
-const BACKGROUND_COLOR = '#E5E4E2';
+const BLACK = '#010101';
+const WHITE = '#FEFEFE';
+
+let TEXT_COLOR = WHITE;
+let BORDER_COLOR = BLACK;
+let BACKGROUND_COLOR = BLACK;
 
 /**
  * @param {string} textToDisplay 
  * @param {string} author 
  * @param {string} outputFilePath 
+ * @param {string} style Can be either 'light' or 'dark'
  */
-function renderQuote (textToDisplay, author, outputFilePath) {
+function renderQuote (textToDisplay, author, outputFilePath, style) {
     textToDisplay = normalizeText(textToDisplay);
     author = normalizeText(author);
 
@@ -30,6 +34,12 @@ function renderQuote (textToDisplay, author, outputFilePath) {
         // TODO: Count emojis as single characters
         console.error("Error: Text exceeds 300 character limit");
         return;
+    }
+
+    if (style === 'light') {
+        TEXT_COLOR = BLACK;
+        BORDER_COLOR = WHITE;
+        BACKGROUND_COLOR = WHITE;
     }
 
     loadCustomFonts();
@@ -45,6 +55,16 @@ function renderQuote (textToDisplay, author, outputFilePath) {
     ctx.fillRect(
         CANVAS_BORDER_WIDTH_PX, 
         CANVAS_BORDER_WIDTH_PX, 
+        CANVAS_WIDTH_PX - (2 * CANVAS_BORDER_WIDTH_PX), 
+        CANVAS_HEIGHT_PX - (2 * CANVAS_BORDER_WIDTH_PX)
+    );
+    ctx.lineWidth = CANVAS_BORDER_WIDTH_PX / 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = TEXT_COLOR;
+    ctx.setLineDash([5, 15, 30]);
+    ctx.strokeRect(
+        CANVAS_BORDER_WIDTH_PX,
+        CANVAS_BORDER_WIDTH_PX,
         CANVAS_WIDTH_PX - (2 * CANVAS_BORDER_WIDTH_PX), 
         CANVAS_HEIGHT_PX - (2 * CANVAS_BORDER_WIDTH_PX)
     );
