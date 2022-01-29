@@ -1,0 +1,22 @@
+{
+  "name": "quote-maker-api",
+  "version": "1.0.0",
+  "description": "A Web API for generating images of quotes",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyberpirate92/quote-image-api.git"
+  },
+  "author": "cyberpirate92",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyberpirate92/quote-image-api/issues"
+  },
+  "homepage": "https://github.com/cyberpirate92/quote-image-api#readme",
+  "dependencies": {
+    "canvas": "^2.9.0"
+  }
+}
