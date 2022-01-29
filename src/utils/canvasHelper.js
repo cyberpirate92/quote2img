@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const { registerFont, createCanvas } = require('canvas');
 
 const CANVAS_WIDTH_PX = 1080;
@@ -83,12 +84,12 @@ function renderQuote (textToDisplay, author, outputFilePath, style) {
  * Load local fonts for canvas to render
  */
 function loadCustomFonts() {
-    registerFont('./fonts/JosefinSans-Regular.ttf', {
+    registerFont(path.join(__dirname, '..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
         family: FONT_FAMILY,
         style: 'regular',
     });
 
-    registerFont('./fonts/JosefinSans-Italic.ttf', {
+    registerFont(path.join(__dirname,'..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
         family: FONT_FAMILY,
         style: 'italic',
     });
