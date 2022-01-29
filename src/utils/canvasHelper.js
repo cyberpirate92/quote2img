@@ -71,7 +71,12 @@ function renderQuote (textToDisplay, author, outputFilePath, style) {
 
     const lines = breakIntoLines(ctx, textToDisplay, CANVAS_PADDING_PX);
     renderQuoteTextAndAuthorName(ctx, lines, author);
-    saveCanvasAsPng(canvas, outputFilePath);
+    
+    if (outputFilePath) {
+        return saveCanvasAsPng(canvas, outputFilePath);
+    } else {
+        return canvas.toBuffer('image/png');
+    }
 }
 
 /**
@@ -208,14 +213,16 @@ function getMaxLineHeight(ctx, lines) {
 }
 
 /**
- * @param {Canvas} ctx 
+ * @param {Canvas} canvas
  * @param {string} outputFilePath 
+ * @returns {Buffer}
  */
 function saveCanvasAsPng(canvas, outputFilePath) {
     console.log('Saving image');
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(outputFilePath, buffer);
     console.log('Image saved');
+    return buffer;
 }
 
 /**
