@@ -248,7 +248,7 @@ function saveCanvasAsPng(canvas, outputFilePath) {
  */
 function padLeftWithSpaces(text, padLength) {
     if (text.length > padLength) {
-        return text.substring(padLength);
+        return text;
     }
 
     while (text.length < padLength) {

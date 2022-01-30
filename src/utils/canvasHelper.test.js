@@ -1,5 +1,5 @@
-const { quotes } = require('./testdata/quotes');
-const { renderQuote } = require('./utils/canvasHelper');
+const { quotes } = require('../testdata/quotes');
+const { renderQuote, SupportedColorThemes } = require('./canvasHelper');
 const path = require('path');
 
 const testCases = [
@@ -9,7 +9,7 @@ const testCases = [
         author: '',
     },
     {
-        title: 'Single word wit author',
+        title: 'Single word with author',
         quote: 'Great.',
         author: 'Someone',
     },
@@ -46,10 +46,12 @@ const testCases = [
 ];
 
 describe('CanvasHelper Generic Cases', () => {
-    testCases.forEach(testcase => {
-        test(testcase.title, () => {
-            const outputFilename = getOutputFilePath(createFilename(testcase.title));
-            renderQuote(testcase.quote, testcase.author, outputFilename);
+    SupportedColorThemes.forEach(colorTheme => {
+        testCases.forEach(testcase => {    
+            test(testcase.title + ' [' + colorTheme + ']', () => {
+                const outputFilename = getOutputFilePath(createFilename(testcase.title + ' ' + colorTheme));
+                renderQuote(testcase.quote, testcase.author, outputFilename, colorTheme);
+            });
         });
     });
 });
@@ -78,5 +80,5 @@ function createFilename(text) {
 }
 
 function getOutputFilePath(filename) {
-    return path.join(__dirname, '..', 'test-outputs', filename);
+    return path.join(__dirname, '..', '..', 'test-outputs', filename);
 }
