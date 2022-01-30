@@ -17,6 +17,8 @@ const AUTHOR_FONT_STYLE = `italic ${parseInt(FONT_SIZE_PX * 0.85)}px ${FONT_FAMI
 const BLACK = '#010101';
 const WHITE = '#FEFEFE';
 
+const SupportedColorThemes = ['light', 'dark'];
+
 let TEXT_COLOR = WHITE;
 let BORDER_COLOR = BLACK;
 let BACKGROUND_COLOR = BLACK;
@@ -37,10 +39,24 @@ function renderQuote (textToDisplay, author, outputFilePath, style) {
         return;
     }
 
-    if (style === 'light') {
-        TEXT_COLOR = BLACK;
-        BORDER_COLOR = WHITE;
-        BACKGROUND_COLOR = WHITE;
+    switch (style) {
+        case 'light':{
+            TEXT_COLOR = BLACK;
+            BORDER_COLOR = WHITE;
+            BACKGROUND_COLOR = WHITE;
+            break;
+        }
+        case 'dark': {
+            TEXT_COLOR = WHITE;
+            BORDER_COLOR = BLACK;
+            BACKGROUND_COLOR = BLACK;
+            break;
+        }
+        default: {
+            TEXT_COLOR = WHITE;
+            BORDER_COLOR = BLACK;
+            BACKGROUND_COLOR = BLACK;
+        }
     }
 
     loadCustomFonts();
@@ -242,5 +258,6 @@ function padLeftWithSpaces(text, padLength) {
 }
 
 module.exports = {
-    renderQuote
+    renderQuote,
+    SupportedColorThemes,
 };
