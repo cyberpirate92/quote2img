@@ -2,6 +2,8 @@ const { quotes } = require('../testdata/quotes');
 const { renderQuote, SupportedColorThemes } = require('./canvasHelper');
 const path = require('path');
 
+const isCiEnv = process.env.CI === 'true';
+
 const testCases = [
     {
         title: 'Single word without author',
@@ -50,7 +52,8 @@ describe('CanvasHelper Generic Cases', () => {
         testCases.forEach(testcase => {    
             test(testcase.title + ' [' + colorTheme + ']', () => {
                 const outputFilename = getOutputFilePath(createFilename(testcase.title + ' ' + colorTheme));
-                renderQuote(testcase.quote, testcase.author, outputFilename, colorTheme);
+                const buffer = renderQuote(testcase.quote, testcase.author, isCiEnv ? '' : outputFilename, colorTheme);
+                expect(buffer).toBeTruthy();
             });
         });
     });
@@ -65,7 +68,8 @@ describe('CanvasHelper Random Quotes', () => {
             let author = quote.substring(quoteEndIndex, quote.length);
             let outputFilename = getOutputFilePath(`random-${count}.png`);
             
-            renderQuote(quoteText, author, outputFilename);
+            const buffer = renderQuote(quoteText, author, isCiEnv ? '' : outputFilename);
+            expect(buffer).toBeTruthy();
             count++;
         });
     });
