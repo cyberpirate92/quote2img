@@ -53,27 +53,28 @@ describe('CanvasHelper Generic Cases', () => {
             test(testcase.title + ' [' + colorTheme + ']', () => {
                 const outputFilename = getOutputFilePath(createFilename(testcase.title + ' ' + colorTheme));
                 const buffer = renderQuote(testcase.quote, testcase.author, isCiEnv ? '' : outputFilename, colorTheme);
-                expect(buffer).toBeTruthy();
+                expect(Buffer.byteLength(buffer)).toBeGreaterThan(0);
             });
         });
     });
 });
 
-describe('CanvasHelper Random Quotes', () => {
-    let count = 1;
-    quotes.forEach(quote => {
-        test(`random-${count}`, () => {
-            let quoteEndIndex = quote.lastIndexOf('—');
-            let quoteText = quote.substring(0, quoteEndIndex);
-            let author = quote.substring(quoteEndIndex, quote.length);
-            let outputFilename = getOutputFilePath(`random-${count}.png`);
-            
-            const buffer = renderQuote(quoteText, author, isCiEnv ? '' : outputFilename);
-            expect(buffer).toBeTruthy();
-            count++;
+if (!isCiEnv) {
+    describe('CanvasHelper Random Quotes', () => {
+        let count = 1;
+        quotes.forEach(quote => {
+            test(`random-${count}`, () => {
+                let quoteEndIndex = quote.lastIndexOf('—');
+                let quoteText = quote.substring(0, quoteEndIndex);
+                let author = quote.substring(quoteEndIndex, quote.length);
+                let outputFilename = getOutputFilePath(`random-${count}.png`);
+                
+                renderQuote(quoteText, author, outputFilename);
+                count++;
+            });
         });
     });
-});
+}
 
 /** 
  * @param {string} text 
