@@ -100,15 +100,16 @@ function renderQuote (textToDisplay, author, outputFilePath, style) {
  * Load local fonts for canvas to render
  */
 function loadCustomFonts() {
-    registerFont(path.join(__dirname, '..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
-        family: FONT_FAMILY,
-        style: 'regular',
-    });
+    // Temporarily commented to rule out if emoji rendering issue is caused due to this font
+    // registerFont(path.join(__dirname, '..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
+    //     family: FONT_FAMILY,
+    //     style: 'regular',
+    // });
 
-    registerFont(path.join(__dirname,'..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
-        family: FONT_FAMILY,
-        style: 'italic',
-    });
+    // registerFont(path.join(__dirname,'..', '..', 'fonts', 'JosefinSans-Regular.ttf'), {
+    //     family: FONT_FAMILY,
+    //     style: 'italic',
+    // });
 }
 
 /**
@@ -260,4 +261,9 @@ function padLeftWithSpaces(text, padLength) {
 module.exports = {
     renderQuote,
     SupportedColorThemes,
+    breakIntoLines,
+    CANVAS_WIDTH_PX,
+    CANVAS_HEIGHT_PX,
+    CANVAS_PADDING_PX,
+    QUOTE_FONT_STYLE,
 };
