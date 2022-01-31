@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quote2img API</title>
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+    <script src="/js/script.js"></script>
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:2807646,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="input-form">
+            <form class="pure-form pure-form-aligned" id="apiForm">
+                <fieldset>
+                    <legend>quote2img API</legend>
+                    <div class="pure-control-group">
+                        <label for="quoteText">Quote</label>
+                        <textarea id="quoteText" placeholder="&quot;If you are depressed you are living in the past, if you are anxious you are living in the future. If you are at peace, you are living in the present.&quot;" rows="5" required></textarea>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="authorName">Author</label>
+                        <input type="text" id="authorName" placeholder="Lao Tzu" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="style">Style</label>
+                        <select id="style" class="pure-input-3">
+                            <option value="light">light</option>
+                            <option value="dark">dark</option>
+                        </select>
+                    </div>
+                    <div class="pure-controls">
+                        <button type="reset" class="pure-button">Clear</button>
+                        <button type="submit" id="submitBtn" class="pure-button pure-button-primary" disabled>Generate</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="output-img">
+            <div>
+                <img src="https://raw.githubusercontent.com/cyberpirate92/quote2img/master/documentation/sample-light.png" id="previewImg" />
+            </div>
+        </div>
+    </div>
+    <a class="github-fork-ribbon" href="https://github.com/cyberpirate92/quote2img" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+</body>
+</html>

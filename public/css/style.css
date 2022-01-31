@@ -1,0 +1,47 @@
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: Lato, Georgia, Times, "Times New Roman", serif;
+}
+html, body {
+    height: 100vh;
+}
+body {
+    background: url('/img/dot-grid.png');
+}
+.container {
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 1.1rem;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    height: 100vh;
+}
+.input-form {
+    background-color: #fefefe;
+}
+.form-control {
+    padding: 0.5rem;
+}
+.form-control select {
+    min-width: 150px;
+}
+.input-form textarea, .input-form input, .input-form select {
+    min-width: 250px;
+}
+.output-img {
+    padding: 0.25rem;
+    float: right;
+}
+.output-img img {
+    width: 100%;
+}
+legend {
+    text-align: center;
+    font-size: 2rem;
+}
+.github-fork-ribbon:before { 
+    background-color: #333; 
+}
