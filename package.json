@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "vercel-build": "yum --showduplicates list zlib && yum install libuuid-devel libmount-devel zlib google-noto-emoji-color-fonts.noarch && cp /lib64/{libuuid,libmount,libblkid,libz}.so.1 node_modules/canvas/build/Release/"
+    "vercel-build": "yum --showduplicates list ttf-ancient-fonts && yum install libuuid-devel libmount-devel zlib ttf-ancient-fonts && cp /lib64/{libuuid,libmount,libblkid,libz}.so.1 node_modules/canvas/build/Release/"
   },
   "repository": {
     "type": "git",
